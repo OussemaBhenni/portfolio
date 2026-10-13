@@ -4,6 +4,7 @@ import {
   education,
   experiences,
   interests,
+  otherExperiences,
   profile,
   projects,
   skills,
@@ -85,6 +86,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 <span className="text-muted">380 tests · </span><span className="text-accent">0 open ports</span>{"\n\n"}
                 <span className="text-accent">$</span> wazuh-alerts --mitre{"\n"}
                 <span className="text-warn">T1046</span> <span className="text-muted">network scan  </span><span className="text-accent">detected</span>{"\n"}
+                <span className="text-warn">T1595</span> <span className="text-muted">active scan   </span><span className="text-accent">detected</span>{"\n"}
                 <span className="text-warn">T1110</span> <span className="text-muted">brute force   </span><span className="text-accent">detected</span>{"\n\n"}
                 <span className="text-accent">$</span> <span className="cursor" />
               </pre>
@@ -151,6 +153,19 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                       </li>
                     ))}
                   </ul>
+                  {e.mitre && (
+                    <div className="mt-6">
+                      <p className="font-mono text-xs uppercase tracking-wider text-muted">{t(ui.mitre)}</p>
+                      <ul className="mt-3 grid gap-2 sm:grid-cols-3">
+                        {e.mitre.map((m) => (
+                          <li key={m.id} className="rounded-lg border border-warn/30 bg-warn/5 px-3 py-2">
+                            <span className="font-mono text-sm text-warn">{m.id}</span>
+                            <span className="block text-xs text-muted">{t(m.name)}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                   {e.outcome && (
                     <p className="mt-6 rounded-lg border border-accent/25 bg-accent/5 p-4 text-sm leading-relaxed">
                       <span className="mr-2 font-mono text-xs uppercase text-accent">{t(ui.outcome)}</span>
@@ -169,6 +184,22 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               </li>
             ))}
           </ol>
+
+          <div className="reveal mt-12">
+            <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">{t(ui.otherExperience)}</h3>
+            <ul className="mt-4 grid gap-4 md:grid-cols-3">
+              {otherExperiences.map((o, i) => (
+                <li key={i} className="rounded-xl border border-line bg-surface p-5">
+                  <div className="flex items-baseline justify-between gap-3">
+                    <p className="font-display font-semibold">{o.company}</p>
+                    <p className="shrink-0 font-mono text-xs text-muted">{t(o.period)}</p>
+                  </div>
+                  <p className="mt-1 text-sm text-accent-2">{t(o.role)}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{t(o.body)}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
         </Section>
 
         {/* ───────────── PROJECTS ───────────── */}

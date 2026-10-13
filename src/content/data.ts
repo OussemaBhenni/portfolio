@@ -39,20 +39,22 @@ export const ui = {
   ctaContact: { fr: "Me contacter", en: "Get in touch" },
   ctaCv: { fr: "Télécharger mon CV", en: "Download my resume" },
   stats: [
-    { value: "3", label: { fr: "stages en entreprise", en: "industry internships" } },
     { value: "568", label: { fr: "alertes SIEM vérifiées", en: "verified SIEM alerts" } },
-    { value: "6", label: { fr: "certifications", en: "certifications" } },
+    { value: "380", label: { fr: "sondes d'intrusion (PTES)", en: "intrusion probes (PTES)" } },
+    { value: "7", label: { fr: "certifications sécurité", en: "security certifications" } },
     { value: "SecNumEdu", label: { fr: "master labellisé ANSSI", en: "ANSSI-labelled master" } },
   ],
   sections: {
     about: { kicker: { fr: "Profil", en: "About" }, title: { fr: "Défendre, détecter, automatiser", en: "Defend, detect, automate" } },
-    experience: { kicker: { fr: "Parcours", en: "Career" }, title: { fr: "Expérience", en: "Experience" }, sub: { fr: "Trois stages, de l'analyse de code à la sécurité d'infrastructure.", en: "Three internships, from code analysis to infrastructure security." } },
+    experience: { kicker: { fr: "Parcours", en: "Career" }, title: { fr: "Expérience", en: "Experience" }, sub: { fr: "Du développement sécurisé à la sécurité opérationnelle : SIEM, durcissement, tests d'intrusion.", en: "From secure development to security operations: SIEM, hardening, penetration testing." } },
     projects: { kicker: { fr: "Réalisations", en: "Selected work" }, title: { fr: "Projets techniques", en: "Technical projects" }, sub: { fr: "Projets académiques et de recherche : infrastructure, conformité, pipelines et IA appliquée au pentest.", en: "Academic and research projects: infrastructure, compliance, pipelines and AI applied to pentesting." } },
     skills: { kicker: { fr: "Stack", en: "Tech stack" }, title: { fr: "Compétences", en: "Skills" } },
     education: { kicker: { fr: "Formation", en: "Education" }, title: { fr: "Formation & certifications", en: "Education & certifications" } },
     contact: { kicker: { fr: "Contact", en: "Contact" }, title: { fr: "Travaillons ensemble", en: "Let's work together" }, sub: { fr: "Je recherche un poste en cybersécurité (DevSecOps, SOC, sécurité d'infrastructure). Écrivez-moi, je réponds rapidement.", en: "I'm looking for a role in cybersecurity (DevSecOps, SOC, infrastructure security). Send me a message and I'll reply quickly." } },
   },
   outcome: { fr: "Résultat", en: "Outcome" },
+  otherExperience: { fr: "Autres expériences", en: "Other experience" },
+  mitre: { fr: "Techniques MITRE ATT&CK détectées", en: "Detected MITRE ATT&CK techniques" },
   sourceCode: { fr: "Code source", en: "Source code" },
   certifications: { fr: "Certifications", en: "Certifications" },
   languagesTitle: { fr: "Langues", en: "Languages" },
@@ -66,12 +68,12 @@ export const about = {
     fr: [
       "Étudiant en Master 2 Fiabilité et Sécurité Informatique à Aix-Marseille Université (label SecNumEdu de l'ANSSI), après une licence appliquée en technologies de l'informatique à l'ISET Radès.",
       "Mon parcours m'a mené du développement backend à la sécurité opérationnelle : analyse statique de code chez Sopra Banking Software, outillage DevSecOps chez ARA Consulting, puis construction d'une infrastructure de détection complète chez Teamwill.",
-      "Ce qui me motive : qu'une attaque soit bloquée, détectée et documentée — et que tout l'environnement puisse être reconstruit à l'identique en quelques minutes.",
+      "J'interviens de l'analyse de risques à la sécurisation technique des infrastructures et des applications, jusqu'à la réponse aux incidents. Ce qui me motive : qu'une attaque soit bloquée, détectée et documentée — et que tout l'environnement puisse être reconstruit à l'identique en quelques minutes.",
     ],
     en: [
       "Master's student in Computer Reliability & Security at Aix-Marseille University (ANSSI SecNumEdu label), after a bachelor's in computer technology at ISET Radès, Tunisia.",
       "My path has taken me from backend development to security operations: static code analysis at Sopra Banking Software, DevSecOps tooling at ARA Consulting, then building a complete detection infrastructure at Teamwill.",
-      "What drives me: an attack that is blocked, detected and documented — and an environment that can be rebuilt identically in minutes.",
+      "I work from risk analysis to the technical hardening of infrastructure and applications, through to incident response. What drives me: an attack that is blocked, detected and documented — and an environment that can be rebuilt identically in minutes.",
     ],
   } as LList,
   focus: [
@@ -91,6 +93,7 @@ export type Experience = {
   context: L;
   bullets: LList;
   outcome?: L;
+  mitre?: { id: string; name: L }[];
   tags: string[];
   link?: string;
 };
@@ -98,7 +101,7 @@ export type Experience = {
 export const experiences: Experience[] = [
   {
     company: "Teamwill",
-    role: { fr: "Ingénieur Cybersécurité & Infrastructure", en: "Cybersecurity & Infrastructure Engineer" },
+    role: { fr: "Ingénieur DevSecOps — SIEM & IaC", en: "DevSecOps Engineer — SIEM & IaC" },
     type: { fr: "Stage de fin d'études", en: "Final-year internship" },
     period: { fr: "Mai – Oct 2026", en: "May – Oct 2026" },
     place: { fr: "Paris, France", en: "Paris, France" },
@@ -108,45 +111,58 @@ export const experiences: Experience[] = [
     },
     bullets: {
       fr: [
-        "Infrastructure as Code : environnement complet (réseaux, 8 conteneurs, pare-feu, détection, alertes) recréable à l'identique en quelques minutes avec Terraform, Ansible et Git",
-        "Segmentation : deux zones isolées par un pare-feu en « deny by default » — 100 % des connexions non autorisées bloquées, 0 port ouvert sur 380 tests",
-        "SIEM Wazuh : déploiement centralisé et 3 règles de détection (scan réseau, brute-force) mappées sur MITRE ATT&CK, validées sur 568 alertes vérifiées",
-        "Alerting & supervision : alertes email en temps réel, tableaux de bord Prometheus / Grafana et outil de mesure du pare-feu développé en Python",
-        "Test d'intrusion : simulation d'une attaque réelle en 5 étapes (méthode PTES, 12 catégories d'outils) pour valider protections et détection",
+        "SIEM Wazuh (Manager / Indexer / Dashboard) déployé en remplacement de FortiSIEM, dont la licence n'a jamais été livrée",
+        "3 règles de corrélation personnalisées mappées sur MITRE ATT&CK (T1046, T1595, T1110), validées sur 568 alertes vérifiées",
+        "Infrastructure as Code : Terraform + playbooks Ansible idempotents, script de démarrage en 8 étapes, 8 conteneurs — versionné sur Git et recréable à l'identique",
+        "Alerting temps réel Wazuh → relais SMTP, validé après recréation complète de l'environnement",
+        "Pare-feu noyau iptables en deny-by-default : 100 % du trafic non autorisé bloqué, 0 port ouvert sur 380 tests",
+        "Supervision Prometheus / Grafana / cAdvisor et exporteur iptables développé en Python",
+        "Test d'intrusion black-box en 5 phases PTES : 12 catégories d'outils orchestrées par un playbook Ansible tagué MITRE ATT&CK (380 sondes)",
+        "Amélioration continue : journal technique quotidien, rapports de phase, traçabilité Git (tags, commits par étape) et pistes d'amélioration de la détection",
       ],
       en: [
-        "Infrastructure as Code: a complete environment (networks, 8 containers, firewall, detection, alerting) rebuilt identically in minutes with Terraform, Ansible and Git",
-        "Segmentation: two zones isolated by a deny-by-default firewall — 100% of unauthorised connections blocked, 0 open ports across 380 tests",
-        "Wazuh SIEM: centralised deployment and 3 detection rules (network scans, brute force) mapped to MITRE ATT&CK, validated on 568 verified alerts",
-        "Alerting & monitoring: real-time email alerts, Prometheus / Grafana dashboards and a firewall measurement tool written in Python",
-        "Penetration test: a 5-stage real-world attack simulation (PTES, 12 tool categories) to validate both protection and detection",
+        "Deployed a Wazuh SIEM (Manager / Indexer / Dashboard) to replace FortiSIEM, whose licence was never delivered",
+        "3 custom correlation rules mapped to MITRE ATT&CK (T1046, T1595, T1110), validated on 568 verified alerts",
+        "Infrastructure as Code: Terraform + idempotent Ansible playbooks, an 8-step bootstrap script, 8 containers — versioned in Git and rebuilt identically",
+        "Real-time alerting Wazuh → SMTP relay, validated after a full rebuild of the environment",
+        "Deny-by-default iptables kernel firewall: 100% of unauthorised traffic blocked, 0 open ports across 380 tests",
+        "Monitoring with Prometheus / Grafana / cAdvisor and an iptables exporter written in Python",
+        "Black-box penetration test in 5 PTES phases: 12 tool categories orchestrated by an Ansible playbook tagged with MITRE ATT&CK (380 probes)",
+        "Continuous improvement: daily technical log, phase reports, Git traceability (tags, per-step commits) and detection improvement leads",
       ],
     },
+    mitre: [
+      { id: "T1046", name: { fr: "Scan de services réseau", en: "Network service discovery" } },
+      { id: "T1595", name: { fr: "Reconnaissance active", en: "Active scanning" } },
+      { id: "T1110", name: { fr: "Force brute", en: "Brute force" } },
+    ],
     outcome: {
       fr: "Un laboratoire de sécurité reproductible où chaque attaque testée est bloquée ou détectée, et où toute l'infrastructure se reconstruit d'une seule commande.",
       en: "A reproducible security lab where every tested attack is blocked or detected, and the whole infrastructure rebuilds with a single command.",
     },
-    tags: ["Terraform", "Ansible", "Docker", "Wazuh", "MITRE ATT&CK", "Prometheus", "Grafana", "Python", "PTES", "Git"],
+    tags: ["Wazuh", "MITRE ATT&CK", "Terraform", "Ansible", "Docker", "iptables", "Prometheus", "Grafana", "cAdvisor", "Python", "PTES", "Git"],
     link: "https://github.com/OussemaBhenni/fortisiem-iac",
   },
   {
     company: "ARA Consulting",
-    role: { fr: "DevSecOps", en: "DevSecOps" },
+    role: { fr: "Développeur de solutions sécurisées · DevSecOps", en: "Secure Solutions Developer · DevSecOps" },
     type: { fr: "Stage de fin d'études (licence)", en: "Final-year internship (bachelor's)" },
     period: { fr: "Fév – Juin 2024", en: "Feb – Jun 2024" },
     place: { fr: "Tunis, Tunisie", en: "Tunis, Tunisia" },
     context: {
-      fr: "Les résultats des différents scanners de sécurité étaient dispersés, ce qui ralentissait l'identification et la correction des failles.",
-      en: "Results from several security scanners were scattered, which slowed down finding and fixing vulnerabilities.",
+      fr: "Renforcer la gouvernance SSI : les audits internes et les résultats des scanners de sécurité étaient dispersés, ce qui ralentissait l'identification et la correction des failles.",
+      en: "Strengthening security governance: internal audits and security scanner results were scattered, which slowed down finding and fixing vulnerabilities.",
     },
     bullets: {
       fr: [
-        "Développement d'une application Spring Boot / React qui centralise les résultats de 4 types d'analyses de sécurité",
+        "Développement d'une application Java / Spring Boot / React de suivi des audits internes, centralisant les résultats de 4 types d'analyses de sécurité",
+        "Application systématique des bonnes pratiques OWASP (développement sécurisé)",
         "Automatisation du traitement des failles, réduisant de 30 % le délai de correction",
         "Contrôle d'accès par rôle (RBAC) et correction de 100 % des failles critiques (référentiel OWASP) en production",
       ],
       en: [
-        "Built a Spring Boot / React application that centralises results from 4 types of security scans",
+        "Built a Java / Spring Boot / React application to track internal audits, centralising results from 4 types of security scans",
+        "Systematic application of OWASP secure-development practices",
         "Automated vulnerability triage, cutting remediation time by 30%",
         "Role-based access control (RBAC) and remediation of 100% of critical (OWASP) vulnerabilities in production",
       ],
@@ -159,19 +175,46 @@ export const experiences: Experience[] = [
   },
   {
     company: "Sopra Banking Software",
-    role: { fr: "Développeur Backend", en: "Backend Developer" },
+    role: { fr: "Développeur Java Junior", en: "Junior Java Developer" },
     type: { fr: "Stage", en: "Internship" },
     period: { fr: "Juil – Sept 2023", en: "Jul – Sep 2023" },
     place: { fr: "Tunis, Tunisie", en: "Tunis, Tunisia" },
     context: {
-      fr: "Éditeur de logiciels bancaires. Mission : améliorer la qualité et la sécurité du code d'un module backend Java.",
-      en: "A banking software vendor. Mission: improve the quality and security of a Java backend module.",
+      fr: "Éditeur de logiciels bancaires. Mission : fiabiliser et sécuriser des échanges dans un SI bancaire critique.",
+      en: "A banking software vendor. Mission: make data exchanges in a critical banking information system more reliable and secure.",
     },
     bullets: {
-      fr: ["Mise en place de contrôles automatiques de qualité et de sécurité du code (SonarLint, SpotBugs), réduisant de 25 % la dette technique"],
-      en: ["Set up automated code quality and security checks (SonarLint, SpotBugs), cutting technical debt by 25%"],
+      fr: [
+        "Traitement et intégration de flux XML sensibles (JAXB, Java EE) dans un système bancaire critique",
+        "Contrôles automatiques de qualité et de sécurité du code (SonarLint, SpotBugs), réduisant de 25 % la dette technique",
+      ],
+      en: [
+        "Processed and integrated sensitive XML flows (JAXB, Java EE) in a critical banking system",
+        "Automated code quality and security checks (SonarLint, SpotBugs), cutting technical debt by 25%",
+      ],
     },
-    tags: ["Java", "SAST", "SonarLint", "SpotBugs"],
+    tags: ["Java EE", "JAXB", "SAST", "SonarLint", "SpotBugs"],
+  },
+];
+
+export const otherExperiences: { company: string; role: L; period: L; body: L }[] = [
+  {
+    company: "SPIRAW",
+    role: { fr: "Développeur Full Stack", en: "Full Stack Developer" },
+    period: { fr: "Août – Sept 2023", en: "Aug – Sep 2023" },
+    body: { fr: "Dashboard de visualisation de données, avec contrôle d'accès aux données métier.", en: "Data-visualisation dashboard, with access control over business data." },
+  },
+  {
+    company: "Sopra Banking Software",
+    role: { fr: "Développeur Full Stack", en: "Full Stack Developer" },
+    period: { fr: "Janv – Fév 2023", en: "Jan – Feb 2023" },
+    body: { fr: "Outils internes React / Spring Boot intégrant les standards de sécurité applicative.", en: "Internal React / Spring Boot tools built to application-security standards." },
+  },
+  {
+    company: "Fuba Printed Circuits",
+    role: { fr: "Stage", en: "Internship" },
+    period: { fr: "Janv – Fév 2022", en: "Jan – Feb 2022" },
+    body: { fr: "Premier stage en entreprise industrielle.", en: "First internship, in an industrial company." },
   },
 ];
 
@@ -284,32 +327,33 @@ export const projects: Project[] = [
 
 export const skills: { title: L; items: string[] }[] = [
   { title: { fr: "Cloud & DevSecOps", en: "Cloud & DevSecOps" }, items: ["AWS (IAM, S3, VPC)", "Docker", "Kubernetes", "Terraform", "Ansible", "GitLab CI/CD", "Jenkins", "Vault"] },
-  { title: { fr: "Sécurité opérationnelle", en: "Security operations" }, items: ["Wazuh", "Splunk", "Prometheus", "Grafana", "Log analysis", "MITRE ATT&CK", "Wireshark", "Zeek"] },
+  { title: { fr: "Sécurité opérationnelle", en: "Security operations" }, items: ["Wazuh", "Splunk", "MITRE ATT&CK", "Réponse à incident", "Analyse de logs", "iptables", "Prometheus", "Grafana", "cAdvisor", "Wireshark", "Zeek"] },
   { title: { fr: "Sécurité applicative", en: "Application security" }, items: ["OWASP Top 10", "SAST / DAST / SCA", "PTES", "Nmap", "Burp Suite", "Secure SDLC", "SonarQube", "Trivy"] },
   { title: { fr: "Développement", en: "Development" }, items: ["Java (Spring Boot)", "Python", "Bash", "Node.js", "React", "Neo4j", "SQL"] },
-  { title: { fr: "Gouvernance & conformité", en: "Governance & compliance" }, items: ["ISO 27001", "RGPD / GDPR", "Compliance as Code", "Recommandations ANSSI"] },
+  { title: { fr: "Gouvernance & conformité", en: "Governance & compliance" }, items: ["Analyse de risques cyber", "ISO/IEC 27001:2022", "RGPD / GDPR", "Compliance as Code", "Recommandations ANSSI"] },
 ];
 
 export const education = [
   {
     title: { fr: "Master Fiabilité & Sécurité Informatique", en: "Master's in Computer Reliability & Security" },
     school: { fr: "Aix-Marseille Université · Label SecNumEdu (ANSSI)", en: "Aix-Marseille University · SecNumEdu label (ANSSI)" },
-    period: "→ 2027",
+    period: "2024 – 2027",
   },
   {
     title: { fr: "Licence appliquée en Technologies de l'Informatique", en: "Applied Bachelor's in Computer Technology" },
     school: { fr: "ISET Radès · Tunisie", en: "ISET Radès · Tunisia" },
-    period: "2024",
+    period: "2021 – 2024",
   },
 ];
 
 export const certifications: { name: string; issuer: L }[] = [
+  { name: "ISO/IEC 27001:2022 Information Security Associate", issuer: { fr: "SkillFront", en: "SkillFront" } },
   { name: "SecNumAcadémie", issuer: { fr: "MOOC · ANSSI", en: "MOOC · ANSSI" } },
   { name: "L'Atelier RGPD", issuer: { fr: "MOOC · CNIL", en: "MOOC · CNIL" } },
   { name: "Advanced Secure Coding With Pseudocode", issuer: { fr: "SecureFlag", en: "SecureFlag" } },
   { name: "Advanced Prompt Injection Attacks", issuer: { fr: "SecureFlag", en: "SecureFlag" } },
-  { name: "Advanced Secure Coding With Spring Boot", issuer: { fr: "SecureFlag", en: "SecureFlag" } },
-  { name: "Intermediate AWS Security With Terraform", issuer: { fr: "SecureFlag", en: "SecureFlag" } },
+  { name: "Advanced Secure Coding With Spring Boot 2", issuer: { fr: "SecureFlag", en: "SecureFlag" } },
+  { name: "Advanced AWS Security With Terraform", issuer: { fr: "SecureFlag", en: "SecureFlag" } },
 ];
 
 export const spokenLanguages: { name: L; level: L }[] = [
