@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio — Oussema Benhenni
 
-## Getting Started
+Portfolio personnel bilingue (FR / EN) — Ingénieur Cybersécurité · DevSecOps & Sécurité Opérationnelle.
 
-First, run the development server:
+Built with **Next.js 15 (App Router)**, **TypeScript** and **Tailwind CSS v4**. Fully static (SSG), no backend, no tracking.
+
+## Sections
+
+Hero (terminal card) · Profil · Expérience (Teamwill, ARA Consulting, Sopra Banking Software) · Projets techniques · Compétences · Formation & certifications · Contact
+
+## Modifier le contenu
+
+Tout le texte est dans **`src/content/data.ts`**, en français et en anglais. Aucun composant à toucher pour mettre à jour une expérience, un projet ou une compétence.
+
+Le CV téléchargeable est `public/CV-Oussema-Benhenni.pdf` — remplace le fichier en gardant le même nom.
+
+## Lancer en local
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000 → redirige vers /fr
+npm run build    # build de production
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Déployer sur Vercel
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Importer ce repo sur [vercel.com/new](https://vercel.com/new) — Next.js est détecté automatiquement.
+2. (Optionnel) Ajouter la variable `NEXT_PUBLIC_SITE_URL` avec l'URL finale (ex. `https://oussemabenhenni.vercel.app`) pour les balises SEO / Open Graph.
+3. Deploy.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Structure
 
-## Learn More
+```
+src/
+├── app/
+│   ├── [lang]/layout.tsx   # <html lang>, metadata SEO par langue
+│   ├── [lang]/page.tsx     # toutes les sections
+│   ├── globals.css         # thème (couleurs, polices, animations)
+│   └── icon.svg            # favicon
+├── components/             # Nav, Reveal (animations au scroll), UI
+└── content/data.ts         # ← contenu FR / EN
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Contact
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Email : oussemabenhenni1@gmail.com
+- LinkedIn : [linkedin.com/in/oussemabenhenni](https://www.linkedin.com/in/oussemabenhenni)
+- GitHub : [@OussemaBhenni](https://github.com/OussemaBhenni)
