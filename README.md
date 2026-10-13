@@ -18,15 +18,17 @@ Le CV téléchargeable est `public/CV-Oussema-Benhenni.pdf` — remplace le fich
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000 → redirige vers /fr
-npm run build    # build de production
+npm run dev      # http://localhost:3000/fr
+npm run build    # export statique dans ./out
 ```
 
-## Déployer sur Vercel
+## Déploiement
 
-1. Importer ce repo sur [vercel.com/new](https://vercel.com/new) — Next.js est détecté automatiquement.
-2. (Optionnel) Ajouter la variable `NEXT_PUBLIC_SITE_URL` avec l'URL finale (ex. `https://oussemabenhenni.vercel.app`) pour les balises SEO / Open Graph.
-3. Deploy.
+**GitHub Pages (actif)** — le workflow `.github/workflows/static.yml` build le site et publie `./out` à chaque push sur `main`.
+Prérequis une seule fois : *Settings → Pages → Source : GitHub Actions*.
+URL : https://oussemabhenni.github.io/portfolio/
+
+**Vercel (optionnel)** — importer le repo sur [vercel.com/new](https://vercel.com/new), sans configuration ; `vercel.json` redirige `/` vers `/fr/`.
 
 ## Structure
 

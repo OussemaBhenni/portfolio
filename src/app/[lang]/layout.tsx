@@ -6,7 +6,7 @@ import "@fontsource-variable/jetbrains-mono";
 import "../globals.css";
 import { languages, profile, type Lang } from "@/content/data";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://oussemabenhenni.vercel.app";
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://oussemabhenni.github.io/portfolio").replace(/\/$/, "");
 
 const meta = {
   fr: {
@@ -29,13 +29,12 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   const { lang } = await params;
   const m = meta[(lang as Lang) in meta ? (lang as Lang) : "fr"];
   return {
-    metadataBase: new URL(SITE_URL),
     title: m.title,
     description: m.description,
     authors: [{ name: profile.name }],
     keywords: ["Oussema Benhenni", "Cybersécurité", "DevSecOps", "SOC", "Wazuh", "Terraform", "Ansible", "Pentest", "Marseille"],
-    alternates: { canonical: `/${lang}`, languages: { fr: "/fr", en: "/en" } },
-    openGraph: { title: m.title, description: m.description, type: "profile", url: `/${lang}`, siteName: profile.name, locale: lang === "fr" ? "fr_FR" : "en_US" },
+    alternates: { canonical: `${SITE_URL}/${lang}/`, languages: { fr: `${SITE_URL}/fr/`, en: `${SITE_URL}/en/` } },
+    openGraph: { title: m.title, description: m.description, type: "profile", url: `${SITE_URL}/${lang}/`, siteName: profile.name, locale: lang === "fr" ? "fr_FR" : "en_US" },
     twitter: { card: "summary", title: m.title, description: m.description },
   };
 }

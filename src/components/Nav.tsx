@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { profile, ui, type Lang } from "@/content/data";
+import { BASE, profile, ui, type Lang } from "@/content/data";
 
 const links = ["about", "experience", "projects", "skills", "contact"] as const;
 
@@ -39,7 +39,7 @@ export function Nav({ lang }: { lang: Lang }) {
 
         <div className="flex items-center gap-2">
           <a
-            href={`/${other}`}
+            href={`${BASE}/${other}/`}
             hrefLang={other}
             className="rounded-md border border-line px-2.5 py-1.5 font-mono text-xs uppercase text-muted transition-colors hover:border-accent/60 hover:text-ink"
             aria-label={other === "en" ? "Switch to English" : "Passer en français"}

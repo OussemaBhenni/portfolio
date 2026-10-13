@@ -2,6 +2,9 @@
 // Edit this file to update the site — no component changes needed.
 
 export type Lang = "fr" | "en";
+
+/** Prefix for plain <a href> links ("/portfolio" on GitHub Pages, "" elsewhere). */
+export const BASE = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 export const languages: Lang[] = ["fr", "en"];
 
 type L = Record<Lang, string>;
@@ -13,7 +16,7 @@ export const profile = {
   email: "oussemabenhenni1@gmail.com",
   linkedin: "https://www.linkedin.com/in/oussemabenhenni",
   github: "https://github.com/OussemaBhenni",
-  cv: "/CV-Oussema-Benhenni.pdf",
+  cv: `${BASE}/CV-Oussema-Benhenni.pdf`,
   location: { fr: "Marseille, France", en: "Marseille, France" } as L,
 };
 
