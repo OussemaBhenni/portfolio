@@ -337,7 +337,7 @@ export const education = [
   {
     title: { fr: "Master Fiabilité & Sécurité Informatique", en: "Master's in Computer Reliability & Security" },
     school: { fr: "Aix-Marseille Université · Label SecNumEdu (ANSSI)", en: "Aix-Marseille University · SecNumEdu label (ANSSI)" },
-    period: "2024 – 2027",
+    period: "2025 – 2027",
   },
   {
     title: { fr: "Licence appliquée en Technologies de l'Informatique", en: "Applied Bachelor's in Computer Technology" },
